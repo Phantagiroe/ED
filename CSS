@@ -1,0 +1,124 @@
+/* after inc */
+/*#edition-toolbar-share .toolbar-lang-share-title { display: none !important; }*/
+
+#edition-toolbar-main{ font-size: 17px !important; }
+
+#edition-toolbar-toggle-group { display: none; }
+
+#edition-toolbar-right{ width:auto !important; }
+
+#edition-toolbar-about-panel {  }
+.klientel-button {
+	float: left;
+	cursor: pointer;
+	
+	padding: 6px;
+	width: 30px;
+    height: 26px;
+    line-height: 26px;
+    position: relative;
+    text-align: center;
+}
+.klientel-radius {	
+	width: 18px !important;
+	height: 18px !important;
+	display: block;
+	background-color: transparent;
+	color: #ddd;
+	/*border: 2px solid #ccc;*/
+	/*border-radius: 50%;*/
+	margin-right: 8px;
+	/*line-height: 18px;*/
+	font-size: 26px;
+	font-weight: normal;
+	-webkit-transition: 0.5s;
+	-moz-transition: 0.5s;
+	-ms-transition: 0.5s;
+	transition: 0.5s;
+	padding: 0px;
+	margin: 0px;
+	/*background-color: #222222;*/
+}
+
+#edition-toolbar-home svg{ display:none; }
+#edition-toolbar-home
+{
+	background-image: url(https://cdn-content-ssl.editiondigital.com/files/toyota/1_ic-info-sign.svg?ver=2);
+	background-size:20px 20px; 
+	background-position: center center;
+	cursor: pointer;
+	background-repeat: no-repeat;
+}
+
+.tyt_icon 
+{
+	position:relative; 
+	width: 20px; 
+	height: 20px; 
+	
+	background-size:20px 20px; 
+	background-position: center center;
+	cursor: pointer;
+	background-repeat: no-repeat;
+}
+#tyt_actual_size_btn { background-image: url(https://cdn-content-ssl.editiondigital.com/files/toyota/5_ic-resize-small.svg?ver=2); }
+#tyt_zoomin { background-image: url(https://cdn-content-ssl.editiondigital.com/files/toyota/4_ic-plus.svg?ver=2); margin-right: 10px; }
+#tyt_zoomout { background-image: url(https://cdn-content-ssl.editiondigital.com/files/toyota/3_ic-minus.svg?ver=2); margin-right: 10px; }
+
+#tyt_download { background-image: url(https://cdn-content-ssl.editiondigital.com/files/toyota/8_ic-download-alt.svg?ver=2); }
+
+.tyt_actual_size_holder{ position:relative; width: 24px; height: 24px; }
+.tyt_arrow_up { position: absolute; bottom:0; left:0; font-size: 14px; text-shadow: 0.6px 0.5px 0 rgba(255,255,255,0.6); }
+.tyt_arrow_down { position: absolute; top:0; right:0; font-size: 14px; text-shadow: 0.6px 0.5px 0 rgba(255,255,255,0.6); }
+ 
+.tyt_zoom_label{    width: auto; float: right; margin-right: 12px; padding-left: 50px; color: #B4B4B4 }
+
+.lfloat{ float: left; }
+.rfloat{ float: right; }
+
+#tyt_toolbar_download
+{
+	float: left;
+	margin-left: 20px;
+	margin-right: 25px;
+	color: #B4B4B4;
+}
+
+/* Hide default share icon: */
+.edition-toolbar-icon.share svg{ display: none; }
+.edition-toolbar-icon.share
+{
+	background-image: url(https://cdn-content-ssl.editiondigital.com/files/toyota/7_ic-share.svg?ver=2);
+	background-size:20px 20px; 
+	background-position: center center;
+	cursor: pointer;
+	background-repeat: no-repeat;
+}
+.toolbar-lang-share-title{ color: #B4B4B4 }
+
+.ml{ margin-left:5px; }
+
+.ed_copyright_branding{ display:none !important; }
+
+.ed-arrow-left,
+.ed-arrow-right{ display:block !important; opacity: 1 !important; }
+
+#tyt_toolbar_download span, #tyt_toolbar_download i{ float: left; }
+
+
+/*.klientel-button:hover .klientel-radius { background-color: #5eba5e; color: #fff; border-color: #5eba5e; }*/
+.player-mobile .hide-in-mobile { display: none !important; }
+
+
+@media screen and (max-width: 700px) {
+	#edition-toolbar-share > span,
+	#tyt_toolbar_download > span
+		{ display: none; }
+}
+
+@media screen and (max-width: 900px) {
+	#edition-toolbar-main #edition-toolbar-right {width: auto !important;}
+	#edition-toolbar-inner > div.tyt_zoom_label.lfloat{ padding-left: 10px; }
+}
+
+

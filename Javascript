@@ -1,0 +1,129 @@
+
+var pdf_link = 'https://xxx.pdf';
+
+
+//----------------------------------------------------------------------------
+
+$('head').append('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">');
+
+var button_home = '';	
+	button_home += '<div id="edition-toolbar-home" class="edition-toolbar-element edition-toolbar-icon">';
+	button_home += 'i';
+	button_home += '<div class="toolbar-selected-panel-arrow home" style="left: 14px;"><div class="inner-arrow"></div></div></div>';
+	
+	// remove default home
+	//$("#edition-toolbar-home").remove();
+	$('#edition-toolbar-toggle-group').css({display:'none'});
+	
+	// zoom +
+	$(
+		'<div class="tyt_zoom_label lfloat">Zoom</div>'+
+		'<div style="width:30px" class="lfloat"></div>'+
+		'<div id="tyt_zoomout" class="tyt_icon lfloat"></div>'+
+		'<div id="tyt_zoomin" class="tyt_icon lfloat"></div>'+
+		'<div id="tyt_actual_size_btn" class="tyt_icon lfloat"></div>'
+	).insertAfter('#edition-toolbar-home');
+	
+	var toolbarRight = $("#edition-toolbar-right");
+	toolbarRight.append($('#edition-toolbar-share'));
+	$('#edition-toolbar-share');
+	toolbarRight.append('<a id="tyt_toolbar_download" href="'+pdf_link+'" target="_blank">'+
+		'<div id="tyt_download" class="tyt_icon lfloat"></div>'+
+		'<span class="ml">Download</span>'+
+		'</a>');
+	
+	// info
+	//toolbarRight.prepend('<div id="edition-toolbar-info" class="klientel-button"><div class="klientel-radius">&#105</div><div class="toolbar-selected-panel-arrow home" style="left: 14px;"><div class="inner-arrow"></div></div></div>');
+	
+	// event for info
+	$('#edition-toolbar-info').click(window.tlbr.toggleAboutPanel);
+	// event for zoom
+	var tyt_zoom_scale = 0.4;
+	function customZoomToobar(scale_add) {
+		window.ide.checkIfUHDShouldBeOffered(window.ide.currentPageObjPgs);
+		window.ide.currentPageObjPgs.iscroll[0].zoom(window.ide.currentPageObjPgs.iscroll[0].scale + scale_add);
+	}
+	/*function customZoomActual() {
+		window.ide.checkIfUHDShouldBeOffered(window.ide.currentPageObjPgs);
+		window.ide.currentPageObjPgs.iscroll[0].zoom(window.ide.currentPageObjPgs.iscroll[0].scale + scale_add);
+	}*/
+	$("#tyt_zoomin").on("click", function() {
+		customZoomToobar(tyt_zoom_scale);
+	});
+	$("#tyt_zoomout").on("click", function() {
+		customZoomToobar(- tyt_zoom_scale);
+	});
+	$("#tyt_actual_size_btn").on("click", function() {
+		// Zoom to actual size:
+		//var scale = $('#wholeContainerDiv').height() / $('#'+window.ide.currentPageObjPgs.maindivid).height();
+		window.ide.checkIfUHDShouldBeOffered(window.ide.currentPageObjPgs);
+		window.ide.currentPageObjPgs.iscroll[0].zoom( 1 );
+	});
+	
+	// Swap toolbar right and left content:
+	var rightContent = $('#edition-toolbar-right');
+	var sharePanel = $('#edition-toolbar-social-panel');
+	sharePanel.css({right:'0', left:'auto', x:'100%'});
+	
+	// Share should come in from right:
+	$('#edition-toolbar-share').off('click');
+	$('#edition-toolbar-share').click(function()
+	{
+		window.allowkeyinteractions = false;
+        window.tlbr.reapplySocialPanelContent('show');
+        //window.tlbr.showSocialPanel(duration);
+        window.tlbr.statsAdd('Social open', 'Open Social panel');
+		
+		sharePanel.toggleClass('tyt_opened');
+		var open = sharePanel.hasClass('tyt_opened');
+		if (open) { sharePanel.css({display:'block'}) }
+		sharePanel.transition({x: (open? '0' : '100%') },400,'ease', function(){
+			if (!open) {$(this).css({display:'none'}) }
+		});
+		
+		// animate arrow:
+		var arrow = $('.toolbar-selected-panel-arrow.social');
+		if (open) { arrow.css({display:'block'}).transStop().transition({height:'50px'},500) }
+		else { arrow.transStop().transition({height:'0px'},200,function(){$(this).css({display:'none'})}) }
+	})
+
+
+
+// CUSTOM ARROWS VISIBILITY CHECKER:
+
+function edcAnyMainPageOnLeftSide()
+{
+	var index = tlbr.currentPageIndex;
+	// find to my main page:
+	while ( window.eddata.pages[index] && !window.eddata.pages[index].ismainpage ){ index-- }
+	if (index==0) {return false}
+	for (var i=index-2; i>=0; i--  )
+		{ if (window.eddata.pages[i] && window.eddata.pages[i].ismainpage) {return true} }
+}
+
+function edcAnyMainPageOnRightSide()
+{
+	for (var i=tlbr.currentPageIndex; i < window.eddata.pages.length; i++  )
+		{ if (window.eddata.pages[i] && window.eddata.pages[i].ismainpage) {return true} }
+}
+
+function edcUpdateTOCArrows()
+{
+	clearTimeout( window.EDC_UPDATE_TOC_ARROWS_TIMEOUT );
+	window.EDC_UPDATE_TOC_ARROWS_TIMEOUT = setTimeout( function()
+	{
+		$('.ed-arrow-left').toggleClass('hidden', !edcAnyMainPageOnLeftSide()  );
+		$('.ed-arrow-right').toggleClass('hidden', !edcAnyMainPageOnRightSide()  );
+	}, 300);
+}
+
+$(document).on("edPageChangeEnded", edcUpdateTOCArrows );
+
+// additional: allow larger zoom:
+$(document).on("edPageZoomEnd", function(){
+	console.log('gooooo');
+	window.ide.currentPageObjPgs.iscroll[0].options.zoomMax = 100;
+} );
+
+edcUpdateTOCArrows();
+	

@@ -17,7 +17,7 @@ var button_home = '';
 	
 	// zoom +
 	$(
-		'<div class="tyt_zoom_label lfloat">Zoom</div>'+
+	
 		'<div style="width:30px" class="lfloat"></div>'+
 		'<div id="tyt_zoomout" class="tyt_icon lfloat"></div>'+
 		'<div id="tyt_zoomin" class="tyt_icon lfloat"></div>'+
@@ -26,7 +26,7 @@ var button_home = '';
 	
 	var toolbarRight = $("#edition-toolbar-right");
 	toolbarRight.append($('#edition-toolbar-share'));
-	$('#edition-toolbar-share');
+	$('#edition-toolbar-share').append('<a class="gray_toolbar_text"><span class="ml">Share</span></a>');
 	toolbarRight.append('<a id="tyt_toolbar_download" href="'+pdf_link+'" target="_blank">'+
 		'<div id="tyt_download" class="tyt_icon lfloat"></div>'+
 		'<span class="ml">Download</span>'+
@@ -74,11 +74,11 @@ var button_home = '';
         //window.tlbr.showSocialPanel(duration);
         window.tlbr.statsAdd('Social open', 'Open Social panel');
 		
-		sharePanel.toggleClass('tyt_opened');
-		var open = sharePanel.hasClass('tyt_opened');
-		if (open) { sharePanel.css({display:'block'}) }
+		//sharePanel.toggleClass('tyt_opened');
+		var open = window.tlbr.panel.social.hidden; // sharePanel.hasClass('tyt_opened');
+		if (open) { sharePanel.css({display:'block'}); window.tlbr.panel.social.hidden = false; }
 		sharePanel.transition({x: (open? '0' : '100%') },400,'ease', function(){
-			if (!open) {$(this).css({display:'none'}) }
+			if (!open) {$(this).css({display:'none'}); window.tlbr.panel.social.hidden = true; }
 		});
 		
 		// animate arrow:
@@ -126,4 +126,7 @@ $(document).on("edPageZoomEnd", function(){
 } );
 
 edcUpdateTOCArrows();
-	
+
+//Hide hamburger menu, because there is no item to display. And Info/Home button stays where it was in full screen mode.
+$('#edition-toolbar-packedmenu').remove();
+$('#edition-toolbar-home').addClass('unpackable');
